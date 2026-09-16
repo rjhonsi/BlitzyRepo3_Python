@@ -74,22 +74,15 @@ def capture_return(method):
 
 
 def loop_nodes(module):
-    """Report which loop constructs each top-level function of ``module`` uses.
-
-    The module's source is parsed instead of its behaviour observed, because
-    printed output is blind to the loop form: a method named for a ``while``
-    loop but implemented with a ``for`` loop emits exactly the same lines.  The
-    handle is opened in a ``with`` block and an explicit encoding is given, so
-    the file is closed rather than leaked -- the suite must finish without a
-    ``ResourceWarning`` -- and decoding does not depend on the locale.
+    """Return the loop constructs used by each top-level function in ``module``.
 
     Args:
-        module: An imported module whose ``__file__`` points at its source.
+        module: An imported module whose ``__file__`` identifies its source.
 
     Returns:
         dict[str, set[str]]: Each top-level function name mapped to the set of
-        loop node type names (``"For"``, ``"While"``) found anywhere inside it.
-        A function containing no loop maps to an empty set.
+        ``"For"`` and ``"While"`` node type names found within it. Functions
+        without loops map to an empty set.
     """
     with open(module.__file__, encoding="utf-8") as source_file:
         tree = ast.parse(source_file.read())
