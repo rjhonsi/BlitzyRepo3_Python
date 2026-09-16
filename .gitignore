@@ -1,0 +1,3 @@
+# Python bytecode caches, written when these modules are imported, run with -m,
+# byte-compiled, or exercised by the test suite.
+__pycache__/
